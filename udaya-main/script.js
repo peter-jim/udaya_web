@@ -93,3 +93,33 @@ function addScrollListener() {
   })
 
 }
+
+
+// Preload images
+document.addEventListener('DOMContentLoaded', function () {
+  const preloadImages = document.querySelectorAll('[data-high-res-image]')
+
+  preloadImages.forEach((imgElement) => {
+    const highResImage = imgElement.getAttribute('data-high-res-image')
+    const img = new Image()
+    img.onload = () => {
+      if (imgElement.tagName === 'IMG') {
+        imgElement.src = highResImage
+      } else {
+        imgElement.style.backgroundImage = `url('${highResImage}')`
+      }
+    }
+    img.src = highResImage
+  })
+
+  const bgElements = document.querySelectorAll('[data-high-res-bg]')
+
+  bgElements.forEach((element) => {
+    const highResBg = element.getAttribute('data-high-res-bg')
+    const img = new Image()
+    img.onload = () => {
+      element.style.backgroundImage = `url('${highResBg}')`
+    }
+    img.src = highResBg
+  })
+})
