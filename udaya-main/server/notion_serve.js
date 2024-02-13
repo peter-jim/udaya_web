@@ -11,11 +11,12 @@ const notion = new Client({
     auth: 'secret_phgiQzAcp66vKL0rpMZofkaICuGE2xG2ynMFEKczOkO',
 })
 
+//https://www.notion.so/udaya-4f3a3951bb864666b2d3d7b047384abd?pvs=4
 
 async function getTitles() {
     try {
       const response = await notion.pages.retrieve({
-        page_id: '5e165c1e964547fcadd8093e821085a2', // Replace with the actual page ID
+        page_id: '4f3a3951bb864666b2d3d7b047384abd', // Replace with the actual page ID
       });
   
       // Extract the title
