@@ -76,7 +76,7 @@
             console.log(titleDiv);
             titleDiv.innerText = blog_title;
 
-            fetch('https://172.31.36.171:3001/notion-data' + '?id=' + String(id))
+            fetch('http://172.31.36.171:3001/notion-data' + '?id=' + String(id))
                 .then(response => response.json())
                 .then(data => {
                     const htmlContent = convertToHTML(data);
