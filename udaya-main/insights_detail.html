@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Udaya</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="crossorigin">
+    <link href="https://fonts.googleapis.com/css2?family=Chivo+Mono:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link href="./style.css" rel="stylesheet">
+
+
+    <style>
+        #notionitem p {
+            color: white;
+            /* 设置文本颜色 */
+            font-size: 1.2rem;
+            /* 设置字体大小 */
+            margin-bottom: 2rem;
+            /* 设置下边距 */
+        }
+
+        #notionitem li {
+            color: white;
+            /* 设置文本颜色 */
+            font-size: 1.2rem;
+            /* 设置字体大小 */
+            margin-bottom: 0.2rem;
+            /* 设置下边距 */
+            margin-left: 4rem;
+            list-style-type: disc;
+            /* 添加小点样式 */
+        }
+
+        #notionitem ul {
+            list-style-type: disc;
+            /* 添加小点样式 */
+        }
+
+        #notionitem h3 {
+            color: white;
+            font-size: 1.5rem !important;
+            margin-top: 2rem !important;
+            margin-bottom: 0.5rem !important;
+            ;
+            /* 2rem * 2 */
+            font-weight: bold !important;
+            /* 添加字体加粗样式 */
+        }
+    </style>
+
+    <script>
+
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+
+        // 获取id参数的值
+        const id = urlParams.get('id');
+        const blog_title = urlParams.get('title');
+
+        // 使用id进行后续处理
+        console.log(id);
+        console.log(blog_title);
+
+
+
+
+
+        window.addEventListener('DOMContentLoaded', () => {
+
+
+            const titleDiv = document.getElementById('blog_title');
+            console.log(titleDiv);
+            titleDiv.innerText = blog_title;
+
+            fetch('http://127.0.0.1:3000/notion-data' + '?id=' + String(id))
+                .then(response => response.json())
+                .then(data => {
+                    const htmlContent = convertToHTML(data);
+                    const notionDiv = document.getElementById('notionitem');
+                    notionDiv.innerHTML = htmlContent;
+                    // console.log("渲染");
+                    // console.log(htmlContent)
+                    // console.log(notionDiv)
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        });
+
+
+
+        function convertToHTML(blocks) {
+            let html = '';
+
+
+            // console.log(blocks);
+
+            for (const block of blocks) {
+
+                console.log("block", block);
+                switch (block.type) {
+                    case 'paragraph':
+                        html += '<p>';
+                        html += convertRichTextToHTML(block.paragraph.rich_text);
+                        html += '</p>';
+                        break;
+
+                    case 'heading_1':
+                        html += '<h1>';
+                        html += convertRichTextToHTML(block.heading_1.rich_text);
+                        html += '</h1>';
+                        break;
+
+                    case 'heading_2':
+                        html += '<h2>';
+                        html += convertRichTextToHTML(block.heading_2.rich_text);
+                        html += '</h2>';
+                        break;
+
+                    case 'heading_3':
+                        html += '<h3>';
+                        html += convertRichTextToHTML(block.heading_3.rich_text);
+                        html += '</h3>';
+                        break;
+
+                    case 'bulleted_list_item':
+                        html += '<ul>';
+                        html += '<li>';
+                        html += convertRichTextToHTML(block.bulleted_list_item.rich_text);
+                        html += '</li>';
+                        html += '</ul>';
+                        break;
+
+                    case 'numbered_list_item':
+                        html += '<ol>';
+                        html += '<li>';
+                        html += convertRichTextToHTML(block.numbered_list_item.rich_text);
+                        html += '</li>';
+                        html += '</ol>';
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+
+            return html;
+        }
+
+        function convertRichTextToHTML(richText) {
+
+            console.log("richText", richText);
+
+            let html = '';
+
+            for (const text of richText) {
+                if (text.type === 'text') {
+                    html += text.text.content;
+                } else if (text.type === 'mention') {
+                    html += `<span class="mention">${text.mention.name}</span>`;
+                }
+
+                // 处理其他类型的富文本元素...
+            }
+
+            return html;
+        }
+
+    </script>
+</head>
+
+<body class=" bg-[#3A3837] overflowx-hidden">
+
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+
+    <div id="header" class="z-10 relative"></div>
+
+
+    <main>
+        <section class="relative mt-12 mb-24 sm:mb-44" id="research">
+            <img src="assets/img/bg.webp" alt=""
+                class="absolute max-w-[180vw] sm:max-w-[140vw] left-[-70%] sm:left-[-2%] top-[-15%] sm:top-[-42%]">
+
+            <div
+                class="relative title-box sm:h-20 sm:mb-10 py-6 sm:py-0 gap-4 sm:gap-0 flex flex-col sm:flex-row sm:items-center justify-between sm:max-w-5xl sm:mx-auto">
+                <h2 class="inline font-extrabold text-xl sm:text-2xl lg:text-3xl text-white border-b border-dotted">
+                    INSIGHTS
+                </h2>
+
+
+
+
+            </div>
+
+
+            <div class="text-center text-white w-full mb-10 sm:mb-20">
+                <p id="blog_title" class="text-lg sm:text-3xl font-bold mb-4 sm:mb-8"></p>
+                <!-- <p class="text-sm">1 Sep 2023</p> -->
+            </div>
+
+            <div id="notionitem" class=" flex-col sm:max-w-5xl sm:mx-auto gap-8 sm:gap-6 text-white">
+
+
+
+
+
+            </div>
+
+
+
+
+
+
+        </section>
+    </main>
+
+    <div id="footer"></div>
+
+    <script src="/script.js"></script>
+
+</body>
+
+</html>

@@ -15,3 +15,7 @@ dist/
 # Ignore user-specific files
 .idea/
 .vscode/
+
+
+
+./node_modules

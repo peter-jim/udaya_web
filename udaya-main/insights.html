@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Udaya</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chivo+Mono:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link href="./style.css" rel="stylesheet">
+
+    <script>
+
+        let titleArray = [];
+        let blog_ids = [];
+
+        window.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const response = await fetch('http://127.0.0.1:3000/getTitile');
+                const data = await response.json();
+
+
+
+                titleArray.push.apply(titleArray, data);
+                console.log("titleArray", titleArray);
+
+
+                // 获取<div>元素
+                var blogListDiv = document.getElementById("blog_list");
+
+                // 遍历内容数组并动态生成<h3>元素，并将其添加到<div>元素中
+                for (var i = 0; i < titleArray.length; i++) {
+                    // 获取<div>元素
+                    var blogListDiv = document.getElementById("blog_list");
+
+                    // 创建<a>元素
+                    var link = document.createElement("a");
+                    link.href = "/insights_detail.html?id=" + titleArray[i].id + '&title=' + titleArray[i].title;
+                    link.className = "min-h-[200px] sm:min-h-[240px] lg:min-h-[320px] sm:w-[47%] flex flex-col relative p-4 sm:p-[50px] justify-center sm:justify-between";
+                    // link.style.backgroundImage = "url('/assets/img/Insights 1.png')";
+                    link.style.backgroundSize = "cover";
+
+                    // 创建<div>元素
+                    var contentDiv = document.createElement("div");
+                    contentDiv.className = "mb-5 sm:mb-0";
+
+                    // 创建日期<p>元素
+                    var dateParagraph = document.createElement("p");
+                    dateParagraph.className = "text-white text-xs sm:text-sm mb-4 sm:mb-7";
+                    // dateParagraph.innerText = "5 Oct 2023";
+
+                    // 创建标题<h3>元素
+                    var heading = document.createElement("h3");
+                    heading.className = "text-white text-lg sm:text-xl lg:text-3xl text-start";
+                    heading.innerText = titleArray[i].title;
+
+                    // 创建分类<p>元素
+                    var categoryParagraph = document.createElement("p");
+                    categoryParagraph.className = "text-white text-xs sm:text-sm";
+                    categoryParagraph.innerText = "Research";
+
+                    // 将元素组合起来
+                    contentDiv.appendChild(dateParagraph);
+                    contentDiv.appendChild(heading);
+                    link.appendChild(contentDiv);
+                    link.appendChild(categoryParagraph);
+                    blogListDiv.appendChild(link);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+
+
+
+
+
+        });
+
+
+
+
+
+
+
+
+
+        // 页面加载完成后执行的函数
+    </script>
+
+
+</head>
+
+<body class=" bg-[#3A3837] overflowx-hidden">
+
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+
+    <div id="header" class="z-10 relative"></div>
+
+    <main>
+
+        <section class="relative mt-12 mb-24 sm:mb-44" id="insights">
+            <!-- <img src="/assets/img/bg.webp" alt="" class="absolute max-w-[180vw] sm:max-w-[140vw] left-[-70%] sm:left-[-2%] top-[-15%] sm:top-[-42%] z-0"> -->
+            <div
+                class="relative title-box sm:h-20 sm:mb-10 py-6 sm:py-0 gap-4 sm:gap-0 flex flex-col sm:flex-row sm:items-center justify-between sm:max-w-5xl sm:mx-auto">
+                <h2
+                    class="inline font-extrabold text-xl sm:text-2xl lg:text-3xl text-white border-b border-dotted margin-bottom:20px">
+                    INSIGHTS</h2>
+
+            </div>
+
+        
+
+            <div id="blog_list"
+                class="flex flex-col sm:flex-row sm:max-w-5xl sm:mx-auto gap-6 sm:gap-8 z-1 relative flex-wrap">
+
+
+            </div>
+        </section>
+
+
+
+        </div>
+
+
+    </main>
+    <div id="footer"></div>
+
+    <script src="./script.js"></script>
+
+</body>
+
+</html>

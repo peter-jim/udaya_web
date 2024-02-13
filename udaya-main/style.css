@@ -66,3 +66,31 @@ a:hover{
   z-index: 1; /* 确保背景层位于其他元素之上 */
   display: none; /* 初始状态下隐藏背景层 */
 }
+
+
+/* 默认样式 */
+#notionitem p  {
+    color: white; /* 设置文本颜色 */
+    font-size: 1.2rem; /* 设置字体大小 */
+    margin-bottom: 2rem; /* 设置下边距 */
+  }
+
+  #notionitem li {
+    color: white; /* 设置文本颜色 */
+    font-size: 1.2rem; /* 设置字体大小 */
+    margin-bottom: 0.2rem; /* 设置下边距 */
+    margin-left: 4rem;
+    list-style-type: disc; /* 添加小点样式 */
+  }
+  
+  #notionitem ul {
+    list-style-type: disc; /* 添加小点样式 */
+  }
+  
+  #notionitem h3 {
+    color: white;
+    font-size:1.5rem !important;
+    margin-top: 2rem !important;
+    margin-bottom: 0.5rem !important; ; /* 2rem * 2 */
+    font-weight: bold !important; /* 添加字体加粗样式 */
+  }
