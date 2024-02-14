@@ -56,6 +56,7 @@
 
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
+        const baseurl = 'https://udaya.dev:3001/notion-data';
 
         // 获取id参数的值
         const id = urlParams.get('id');
@@ -66,7 +67,7 @@
         console.log(blog_title);
 
 
-
+        let blog_time = '';
 
 
         window.addEventListener('DOMContentLoaded', () => {
@@ -76,12 +77,16 @@
             console.log(titleDiv);
             titleDiv.innerText = blog_title;
 
-            fetch('http://172.31.36.171:3001/notion-data' + '?id=' + String(id))
+
+            const blogTimeDiv = document.getElementById('blog_time');
+
+            fetch(baseurl + '?id=' + String(id))
                 .then(response => response.json())
                 .then(data => {
                     const htmlContent = convertToHTML(data);
                     const notionDiv = document.getElementById('notionitem');
                     notionDiv.innerHTML = htmlContent;
+                    blogTimeDiv.innerText = blog_time;
                     // console.log("渲染");
                     // console.log(htmlContent)
                     // console.log(notionDiv)
@@ -110,9 +115,12 @@
                         break;
 
                     case 'heading_1':
-                        html += '<h1>';
-                        html += convertRichTextToHTML(block.heading_1.rich_text);
-                        html += '</h1>';
+                        // html += '<h1>';
+                        // html += convertRichTextToHTML(block.heading_1.rich_text);
+                        // html += '</h1>';
+
+                        blog_time = convertRichTextToHTML(block.heading_1.rich_text);
+
                         break;
 
                     case 'heading_2':
@@ -183,34 +191,36 @@
 
 
     <main>
-        <section class="relative mt-12 mb-24 sm:mb-44" id="research">
+        <section class="mx-4 sm:mx-auto relative mt-12  mb-24 sm:mb-44" id="research">
             <img src="assets/img/bg.webp" alt=""
                 class="absolute max-w-[180vw] sm:max-w-[140vw] left-[-70%] sm:left-[-2%] top-[-15%] sm:top-[-42%]">
 
-            <div
-                class="relative title-box sm:h-20 sm:mb-10 py-6 sm:py-0 gap-4 sm:gap-0 flex flex-col sm:flex-row sm:items-center justify-between sm:max-w-5xl sm:mx-auto">
-                <h2 class="inline font-extrabold text-xl sm:text-2xl lg:text-3xl text-white border-b border-dotted">
+                <div class="flex flex-col sm:max-w-5xl sm:mx-auto gap-8 sm:gap-6">            <h2 class="inline font-extrabold text-xl sm:text-2xl lg:text-3xl text-white border-b border-dotted  gap-4 sm:gap-8" >
                     INSIGHTS
                 </h2>
 
 
+                
+
+
+                </div>
+
+                <div class="text-center text-white mb-10 sm:mb-20">
+                    <p id="blog_title" class="text-lg sm:text-3xl font-bold mb-4 sm:mb-8"></p>
+                    <p id="blog_time" class="text-sm"></p>
+                </div>
+
+                <div id="notionitem" class=" flex-col sm:max-w-5xl sm:mx-auto gap-8 sm:gap-6 text-white">
+
+
+
+
 
 
             </div>
 
 
-            <div class="text-center text-white w-full mb-10 sm:mb-20">
-                <p id="blog_title" class="text-lg sm:text-3xl font-bold mb-4 sm:mb-8"></p>
-                <!-- <p class="text-sm">1 Sep 2023</p> -->
-            </div>
 
-            <div id="notionitem" class=" flex-col sm:max-w-5xl sm:mx-auto gap-8 sm:gap-6 text-white">
-
-
-
-
-
-            </div>
 
 
 

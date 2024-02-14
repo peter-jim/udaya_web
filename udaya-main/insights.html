@@ -16,10 +16,12 @@
 
         let titleArray = [];
         let blog_ids = [];
+        let blog_time_1 = '';
+        let blog_time_2 = '';
 
         window.addEventListener('DOMContentLoaded', async () => {
             try {
-                const response = await fetch('http://172.31.36.171:3001/getTitile');
+                const response = await fetch('https://udaya.dev:3001/getTitile');
                 const data = await response.json();
 
 
@@ -73,10 +75,6 @@
                 console.error('Error:', error);
             }
 
-
-
-
-
         });
 
 
@@ -111,9 +109,11 @@
                     class="inline font-extrabold text-xl sm:text-2xl lg:text-3xl text-white border-b border-dotted margin-bottom:20px">
                     INSIGHTS</h2>
 
+                
+
             </div>
 
-        
+
 
             <div id="blog_list"
                 class="flex flex-col sm:flex-row sm:max-w-5xl sm:mx-auto gap-6 sm:gap-8 z-1 relative flex-wrap">
