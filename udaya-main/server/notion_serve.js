@@ -1,9 +1,16 @@
 const express = require('express');
-const fetch = require('node-fetch');
+const https = require('https');
+const fs = require('fs');
 const app = express();
+
+
+const privateKey = fs.readFileSync('/root/generated-private-key.key', 'utf8');
+const certificate = fs.readFileSync('/root/test2.crt', 'utf8');
 
 const { Client } = require("@notionhq/client");
 // const NotionPageToHtml = require('notion-page-to-html');
+
+
 
 // Initializing a client
 
@@ -160,7 +167,7 @@ app.use((req, res, next) => {
 
     try {
         const response = await notion.pages.retrieve({
-            page_id: '5e165c1e964547fcadd8093e821085a2', // Replace with the actual page ID
+            page_id: '4f3a3951bb864666b2d3d7b047384abd', // Replace with the actual page ID
           });
 
         
@@ -256,8 +263,19 @@ app.get('/notion-data', async (req, res) => {
   }
 });
 
-app.listen(3001, () => {
-  console.log('Server is running on port 3000');
-});
+// app.listen(3001, () => {
+//   console.log('Server is running on port 3000');
+// });
 
+
+// 创建 HTTPS 服务器
+const server = https.createServer({
+  key: privateKey,
+  cert: certificate
+}, app);
+
+// 启动服务器
+server.listen(3001, () => {
+  console.log('Server is running on port 3001');
+});
 
